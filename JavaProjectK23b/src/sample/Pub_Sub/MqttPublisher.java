@@ -34,9 +34,7 @@ public class MqttPublisher  {
             message.setQos(qos);
             sampleClient.publish(topic, message);
             System.out.println("Message published");
-            //sampleClient.disconnect();
-            //System.out.println("Disconnected");
-            //System.exit(0);
+
         } catch (MqttException me) {
             System.out.println("reason " + me.getReasonCode());
             System.out.println("msg " + me.getMessage());
