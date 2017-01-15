@@ -75,7 +75,7 @@ public class MqttSubscriber implements MqttCallback {
 
     }
 
-//THREAD FOR EACH TOPIC THAT JUST ARRIVED IN ORDER TO BE MANAGED
+//-------------------THREAD FOR EACH TOPIC THAT JUST ARRIVED IN ORDER TO BE MANAGED------------------------
 
 
     private class ManagerThread implements Runnable {
@@ -90,19 +90,14 @@ public class MqttSubscriber implements MqttCallback {
         public void inserInMyDataBase(String macAddress ,String latitude ,String longtitude ,String sensorType ,String sensor_Value , String  date ) {
 
 
-
-
             try {
                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?autoReconnect=true&useSSL=false", "root", "MyNewPass");
-                // stmt = connection.createStatement( );
                 String SQL = "INSERT INTO  blind_light_data(user_id ,location_latitude , location_longitude , sensorType , sensorValue , date_time)  VALUES(? , ? , ? , ? , ? , ?)";
 
 
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss" );
-                // String date_string= Date.getValue().getYear()+"-"+ Date.getValue().getMonthValue()+"-"+Date.getValue().getDayOfMonth()+" "+ cbox_hours.getValue().toString()+":"+ cbox_mins.getValue().toString()+":"+ cbox_secs.getValue().toString();
                 java.util.Date ends_date = df.parse(date);
                 Timestamp mytmp = new java.sql.Timestamp(ends_date.getTime());
-                //prepared_state.setTimestamp(cur,mytmp);
 
 
                 PreparedStatement prepared_state= connection.prepareStatement(SQL);
@@ -115,7 +110,6 @@ public class MqttSubscriber implements MqttCallback {
 
 
                 System.out.println(prepared_state+"----fwefwf-------");
-                //int rs = stmt.executeUpdate(String.valueOf(prepared_state));
                 prepared_state.executeUpdate();
 
 
