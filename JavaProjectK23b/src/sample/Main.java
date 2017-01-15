@@ -13,12 +13,17 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+
+import java.awt.*;
 import java.util.Date;
 import java.sql.*;
 //import org.eclipse.paho.client.mqttv3.MqttClient;
 import javafx.stage.Stage;
 import sample.Pub_Sub.MqttPublisher;
 import sample.Pub_Sub.MqttSubscriber;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import java.util.Date;
 import java.sql.*;
 import static sample.Controller.*;
@@ -100,7 +105,11 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
+
+
         //------------Empty Data Base-----------
+
+
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "MyNewPass");
             Statement stmt = connection.createStatement( );
@@ -113,10 +122,14 @@ public class Main extends Application {
             System.out.println( err.getMessage( ) );
         }
 
+
         launch(args);
 
 
         //publisher = new MqttPublisher();
         //publisher.main();
     }
+
+
+
 }

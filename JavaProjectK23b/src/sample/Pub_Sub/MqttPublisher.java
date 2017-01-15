@@ -13,9 +13,9 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class MqttPublisher  {
-    public void main(String mac) {
+    public void main(String mac ,String msg) {
         String topic = mac;
-        String content = "Be carefull: Possibility of crash";
+        String content = msg;
         int qos = 2;
         String broker = "tcp://localhost:1883";
         String clientId = "Μyclientid";

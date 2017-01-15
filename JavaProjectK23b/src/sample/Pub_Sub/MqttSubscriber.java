@@ -12,6 +12,9 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
 import java.sql.*;
 
 
@@ -31,6 +34,8 @@ import static sample.Controller.min_light_threshold;
 public class MqttSubscriber implements MqttCallback {
 
     private static MqttPublisher publisher;
+    private static MqttPublisher publisher2;
+
 
 
     public static void main() {
@@ -167,13 +172,70 @@ public class MqttSubscriber implements MqttCallback {
                 if (possible_crash.equals(true)) {
                     inserInMyDataBase(macAddress, latitude, longtitude, sensorType, sensor_Value, date);
                     publisher = new MqttPublisher();
-                    publisher.main(macAddress);
+                    publisher.main(macAddress, "Be carefull: Possibility of crash");
 
+                    //-----------------Confirmed Crashed-----------------
+
+                    try {
+
+                        final String mac = "user_id";
+                        java.util.Date datee=null;
+
+
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "MyNewPass");
+                        Statement stmt = connection.createStatement( );
+                        String SQL = "SELECT user_id,date_time FROM blind_light_data ";
+                        ResultSet rs = stmt.executeQuery( SQL );
+
+                        while(rs.next()){
+                            String allmac  = rs.getString(mac);
+                            Timestamp timestamp = rs.getTimestamp("date_time");
+                            String alldates =timestamp.toString();
+                            if (timestamp != null)
+                                datee = new java.util.Date(timestamp.getTime());
+                                if((macAddress!=allmac) &&(date==alldates)){
+
+                                    //-----------both devices need to be informed-------------
+                                    publisher = new MqttPublisher();
+                                    publisher.main(macAddress,"Confirmed Crash");
+                                    publisher2 = new MqttPublisher();
+                                    publisher2.main(allmac ,"Confirmed Crash");
+
+                                }
+
+
+                        }
+
+
+
+                        rs.close();
+                    }
+                    catch ( SQLException err ) {
+                        System.out.println( err.getMessage( ) );
+                    }
                 }
 
             }
         }
 
+    }
+
+
+
+    public void changeTable(JTable blind_light_data, int column_index) {
+        blind_light_data.getColumnModel().getColumn(column_index).setCellRenderer(new DefaultTableCellRenderer() {
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                                                           boolean isSelected, boolean hasFocus, int row, int column) {
+                final Component c = super.getTableCellRendererComponent(table, value,
+                        isSelected, hasFocus, row, column);
+
+                        setBackground(new Color(255, 101, 18));
+
+                return c;
+            }
+        });
     }
 
 

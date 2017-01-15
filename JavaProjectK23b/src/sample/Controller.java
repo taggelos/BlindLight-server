@@ -115,7 +115,10 @@ public class Controller {
 
        if (fMax==true || fMin==true){
            try_again.setVisible(true);
+           return;
        }else
+           try_again.setVisible(false);
+
            System.out.println("clicked on "+ max_light.getText()+"   "+ min_light.getText() +"     " + x_axis.getValue() +"    " + y_axis.getValue() + "   " + z_axis.getValue());
 
         System.out.println("clicked on "+ x_axis.getValue()+"    " + y_axis.getValue()+ "   " + z_axis.getValue());
@@ -143,7 +146,6 @@ public class Controller {
         float longitude;
         String sensor_type;
         String  sensor_value;
-        // @Temporal(TemporalType.TIMESTAMP)
         Date  datetime ;
     }
 //----------------------------------------------------------------------------------------
@@ -157,7 +159,6 @@ public class Controller {
 
     public void Search(ActionEvent mouseEvent) throws IOException {
 
-        //an dinetai hmeromhnia prepei na dinete OLOKLHRH!!!
 
         if (Date.getValue() != null) {
            if (cbox_hours.getValue() == null || cbox_mins.getValue() == null || cbox_secs.getValue() == null) {
@@ -300,7 +301,6 @@ public class Controller {
                     temp_record.longitude = rs.getFloat("location_longitude");
                     temp_record.sensor_type = rs.getString("sensorType");
                     temp_record.sensor_value = rs.getString("sensorValue");
-                    // @Temporal(TemporalType.TIMESTAMP)
                     temp_record.datetime = rs.getDate("date_time");
                     rec_li.add(temp_record);
                  }
@@ -327,7 +327,7 @@ public class Controller {
                sec_pane.getChildren().add(mypg);
 
 
-                Scene scene = new Scene(myPane,1000, 600);
+                Scene scene = new Scene(myPane,800, 600);
                 primaryStage.close();
                 primaryStage.setScene(scene);
                 primaryStage.show();
@@ -411,7 +411,7 @@ public class Controller {
 
 
         Stage primaryStage = Main.getPrimaryStage();
-        primaryStage.setTitle("Result)");
+        primaryStage.setTitle("Results");
         Pane myPane = FXMLLoader.load(getClass().getResource("Search.fxml"));
         Pagination mypg =  new Pagination();
 
@@ -445,7 +445,7 @@ public class Controller {
         sec_pane.getChildren().add(mypg);
 
 
-        Scene scene = new Scene(myPane,1000, 600);
+        Scene scene = new Scene(myPane,800, 600);
         primaryStage.close();
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -455,7 +455,7 @@ public class Controller {
         Stage primaryStage = Main.getPrimaryStage();
         primaryStage.setTitle("BlindLight(Beta)");
         TabPane myPane = FXMLLoader.load(getClass().getResource("Settings.fxml"));
-        Scene scene = new Scene(myPane);
+        Scene scene = new Scene(myPane ,800 , 400);
         primaryStage.close();
         primaryStage.setScene(scene);
         primaryStage.show();
